@@ -1,4 +1,4 @@
-# jQuery WeekLine Week Day Picker Plugin
+# jQuery WeekLine plugin
 
 WeekLine is a light jQuery plugin for selecting days of a week. It can be particularly helpful for entering weekly schedules, such as cinema movie and theatrical play times, as well as for scheduling weekly league games and actually anything that is weekly based. The usual date pickers are monthly oriented, but there times where picking dates from the coming week only (or 2) is a more natural and convenient way to schedule. Weekline was initially written for such an occasion and more specifically for cinema and theatre date-time data entry, focusing on increasing data entry’s speed while limiting errors.
 
