@@ -1,0 +1,39 @@
+{
+    "name": "weekLine",
+    "version": "1.0.0",
+    "title": "jQuery weekLine day picker",
+    "description": "A light jQuery plugin for selecting days of a week",
+    "keywords": [
+        "jquery",
+        "weekLine",
+        "week-calendar",
+        "day-picker",
+        "calendar",
+        "weekdays",
+        "picker",
+        "week"
+    ],
+    "author": {
+        "name": "Dimitris Kotsakis",
+        "url": "https://github.com/dkLtd"
+    },
+    "maintainers": [
+        {
+            "name": "Dimitris Kotsakis",
+            "url": "https://github.com/dkLtd"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/dkLtd/weekLine/blob/master/MIT-LICENSE.txt"
+        }
+    ],
+    "bugs": "https://github.com/dkLtd/weekLine/issues",
+    "homepage": "https://github.com/dkLtd/weekLine",
+    "docs": "https://github.com/dkLtd/weekLine#readme",
+    "demo": "http://codebits.weebly.com/plugins/category/weekline-day-picker",
+    "dependencies": {
+        "jquery": ">=1.6.3"
+    }
+}
