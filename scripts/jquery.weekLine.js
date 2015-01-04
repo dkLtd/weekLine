@@ -1,6 +1,4 @@
-﻿(function ($) {
-	
-	var selectedDay = "selectedDay";
+﻿﻿(function ($) {
 	
     $.fn.weekLine = function (params) {
         if (methods[params]) {
@@ -16,6 +14,10 @@
         dayLabels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         mousedownSel: true,
         startDate: null,
+		singleDaySelect: false,
+		allowDeselect: true,
+		// dark, white, jquery-ui		
+		theme: "dark",
         onChange: null
     };
 
@@ -24,25 +26,39 @@
             return this.each(function () {
                 var $week = $(this),
 					mouseDown = false,
+					selectedDay = "selectedDay",
+					weekDaysStyle = "",
 					weekHTML = "";
-                $week.settings = 
-					$.extend(true, {}, $.fn.weekLine.defaultSettings, options || {});
-                $week.data("weekLine", $week.settings);
-
+				$week.settings = 
+						$.extend(true, {}, $.fn.weekLine.defaultSettings, options || {});
+				var	theme = $week.settings.theme;
+				
 				for (i in $week.settings.dayLabels) {
-					weekHTML += "<a href='#" + i + "'>" + $week.settings.dayLabels[i] + "</a>";
+					weekHTML += "<a href='#" + i +
+						(theme == "jquery-ui" ? "' class='ui-state-default'>" : "'>") +
+					    $week.settings.dayLabels[i] + "</a>";
+				}
+
+				if (theme == "jquery-ui") {
+					weekDaysStyle = "ui-widget ui-WeekDays";
+					selectedDay = "ui-state-active";
+				} else {
+					weekDaysStyle = "cleanslate weekDays-" + theme;
 				}
 				
+				$week.settings.selectedDay = selectedDay;
+                $week.data("weekLine", $week.settings);
+ 
                 $week
-					.addClass("weekDays cleanslate")
+					.addClass(weekDaysStyle)
 				    .append(weekHTML)
 				    .mouseup(function () {
 				        mouseDown = false;
 				        return false;
 				    });
-
-                $days = $week.children()				    
-				    .bind("mousedown", function () {
+			
+				$days = $week.children()
+					.bind("mousedown", function () {
 				        if ($week.settings.mousedownSel) {
 							mouseDown = true;
 						}
@@ -58,10 +74,23 @@
 				        selectDay(this);
 				        return false;
 				    });
-
+				
+				if (theme == "jquery-ui") {					
+					$days.bind("hover", function () {
+						$(this).toggleClass("ui-state-hover");
+					});
+				}
+                    
                 function selectDay(day) {
-                    $(day).toggleClass(selectedDay);
-
+					if ($week.settings.singleDaySelect) {
+						$(day).siblings().removeClass(selectedDay);
+					}
+					
+					if ($week.settings.allowDeselect || !$(day).hasClass(selectedDay))
+					{
+						$(day).toggleClass(selectedDay);
+					}
+					
                     // Check if set (because its default is null)
                     if ($.isFunction($week.settings.onChange)) {
                         $week.settings.onChange.call($week);
@@ -78,7 +107,7 @@
             this.children().each(function () {
                 $day = $(this);
 
-                if ($day.hasClass(selectedDay)) {
+                if ($day.hasClass($settings.selectedDay)) {
                     switch (format) {
                         case "indexes":
                             selected += $day.attr('href').substr(1) + ",";
@@ -123,16 +152,17 @@
         },
 		setSelected: function (selectedDays) {
 			var $this = $(this),
+				$settings = $this.data("weekLine"),
 				$days = $this.children(),
 				selDays = selectedDays.split(',');
 			
 			// Reset selected days
-			$days.removeClass(selectedDay);
+			$days.removeClass($settings.selectedDay);
 			
 			for (i in selDays) {
 				$days.filter(isNaN(selDays[i]) ?
 					"a:contains('" + selDays[i] + "')" :
-					"a:[href='#" + selDays[i] + "']").addClass(selectedDay);
+					"a[href='#" + selDays[i] + "']").addClass($settings.selectedDay);
 			}
 		}
 
@@ -145,8 +175,8 @@
 			m = dt.getMonth() + 1,
 			y = dt.getFullYear();
 
-        // Return d + "-" + m + "-" + y;
-        return (d < 10 ? '0' + d : d) + "/" + (m < 10 ? '0' + m : m) + "/" + y;
+		// Return date in ISO 8601 format
+        return y + "/" + (m < 10 ? '0' + m : m) + "/" + (d < 10 ? '0' + d : d);
     }
 
 })(jQuery);
