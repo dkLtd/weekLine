@@ -1,6 +1,6 @@
 {
     "name": "weekLine",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "title": "jQuery weekLine day picker",
     "description": "A light jQuery plugin for selecting days of a week",
     "keywords": [

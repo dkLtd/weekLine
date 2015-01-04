@@ -69,6 +69,17 @@ The code below creates 4 weekLine day pickers and assigns their values to a span
 
 You can find working examples of the above in its site: http://codebits.weebly.com/plugins/category/weekline-day-picker
 
+Real world example: http://codebits.weebly.com/game-scheduler.html
+# Version History
+version 1.2.0
+- It now supports jquery ui themes (use option "theme: jquery-ui") 
+- Added option (singleDaySelect) for allowing only one day selected at a time (default: false)
+- Added option (allowDeselect) for allowing both day selection and de-selection (default: true)
+- getSelected when is returning dates is now using the ISO 8601 format (e.g. 2015/01/20)
+
+version 1.0.0
+- Initial release
+
 # MIT Licence
 
 Copyright (c) 2014 Dimitris Kotsakis
