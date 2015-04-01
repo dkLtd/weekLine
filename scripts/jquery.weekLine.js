@@ -34,7 +34,7 @@
 				var	theme = $week.settings.theme;
 				
 				for (i in $week.settings.dayLabels) {
-					weekHTML += "<a href='#" + i +
+					weekHTML += "<a data-index-number='" + i +
 						(theme == "jquery-ui" ? "' class='ui-state-default'>" : "'>") +
 					    $week.settings.dayLabels[i] + "</a>";
 				}
@@ -110,20 +110,20 @@
                 if ($day.hasClass($settings.selectedDay)) {
                     switch (format) {
                         case "indexes":
-                            selected += $day.attr('href').substr(1) + ",";
+                            selected += $day.data('indexNumber') + ",";
                             break;
                         case "dates":
                             selected += 
 								addDays(date ? date : 
 									($settings.startDate ? $settings.startDate : new Date()),
-								$day.attr('href').substr(1)) + ",";
+								$day.data('indexNumber')) + ",";
                             break;
                         case "descriptive":
                             if ($prev == null) {
 								selected = $day.html();
 							}
                             else {
-                                if ($day.attr('href').substr(1) - $prev.attr('href').substr(1) == 1) {
+                                if ($day.data('indexNumber') - $prev.data('indexNumber') == 1) {
                                     var parts = 
 										selected.split(',')[selected.split(',').length - 1].split('-');
 
@@ -162,7 +162,7 @@
 			for (i in selDays) {
 				$days.filter(isNaN(selDays[i]) ?
 					"a:contains('" + selDays[i] + "')" :
-					"a[href='#" + selDays[i] + "']").addClass($settings.selectedDay);
+					"a[data-index-number='" + selDays[i] + "']").addClass($settings.selectedDay);
 			}
 		}
 
